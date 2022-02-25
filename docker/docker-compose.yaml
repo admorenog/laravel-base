@@ -1,0 +1,28 @@
+version: "3.7"
+services:
+  web-server:
+    container_name: web
+    build:
+      dockerfile: php.Dockerfile
+      context: .
+    restart: always
+    volumes:
+      - "../:/var/www/html"
+    ports:
+      - "1080:80"
+    environment:
+      - PHP_IDE_CONFIG=serverName=localhost
+    expose:
+      - 9003
+  mysql-server:
+    container_name: db
+    image: mysql:8.0.27
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: secret
+    volumes:
+      - mysql-data:/var/lib/mysql
+    ports:
+      - "3306:3306"
+volumes:
+  mysql-data:
