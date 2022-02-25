@@ -1,10 +1,12 @@
 version: "3.7"
 services:
-  web-server:
-    container_name: web
+  web-php8-server:
+    container_name: clicars
     build:
       dockerfile: php.Dockerfile
       context: .
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
     restart: always
     volumes:
       - "../:/var/www/html"
@@ -23,6 +25,6 @@ services:
     volumes:
       - mysql-data:/var/lib/mysql
     ports:
-      - "3306:3306"
+      - "13307:3306"
 volumes:
   mysql-data:
