@@ -11,7 +11,7 @@ RUN pecl install xdebug
 
 COPY php/conf.d/* /usr/local/etc/php/conf.d/
 
-RUN chmod og+w /var/log/php_error.log
+RUN touch /var/log/php_error.log && chmod og+w /var/log/php_error.log
 
 COPY apache/envvars /etc/apache2/envvars
 
