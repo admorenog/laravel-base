@@ -115,12 +115,13 @@
   </component>
   <component name="PhpProjectServersManager">
     <servers>
-      <server host="localhost" id="2178a343-ce86-4c23-89fa-d7ff220e7195" name="localhost" port="1080" use_path_mappings="true">
-        <path_mappings>
-          <mapping local-root="$PROJECT_DIR$" remote-root="/var/www/html" />
-        </path_mappings>
-      </server>
+      <server host="localhost" id="2178a343-ce86-4c23-89fa-d7ff220e7195" name="localhost" port="1080" use_path_mappings="true" />
     </servers>
   </component>
   <component name="PhpProjectSharedConfiguration" php_language_level="8.0" />
+  <component name="PhpUnit">
+    <phpunit_settings>
+      <PhpUnitSettings configuration_file_path="$PROJECT_DIR$/phpunit.xml" custom_loader_path="$PROJECT_DIR$/vendor/autoload.php" use_configuration_file="true" />
+    </phpunit_settings>
+  </component>
 </project>
