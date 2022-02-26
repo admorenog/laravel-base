@@ -6,16 +6,15 @@ RUN echo "set bell-style visible" > ~/.inputrc
 
 RUN apt update
 RUN apt -y upgrade
-RUN apt -y install vim git zip
+RUN apt -y install vim git zip zsh
+
+# PHP config
 RUN pecl install xdebug
-
 COPY php/conf.d/* /usr/local/etc/php/conf.d/
-
 RUN touch /var/log/php_error.log && chmod og+w /var/log/php_error.log
 
-COPY apache/envvars /etc/apache2/envvars
-
 # Apache configuration
+COPY apache/envvars /etc/apache2/envvars
 RUN a2enmod rewrite
 RUN echo "ServerName 127.0.0.1" >> /etc/apache2/apache2.conf
 RUN sed -i 's/\/var\/www\/html/\/var\/www\/html\/public/g' /etc/apache2/sites-enabled/000-default.conf
@@ -27,8 +26,8 @@ RUN php composer-setup.php
 RUN php -r "unlink('composer-setup.php');"
 RUN mv composer.phar /usr/local/bin/composer
 
+# Permissions
 RUN usermod -u 1000 www-data
 RUN groupmod -g 1000 www-data
 RUN chown -R www-data:www-data /var/www
-
 WORKDIR /var/www/html
