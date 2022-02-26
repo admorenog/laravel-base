@@ -1,7 +1,7 @@
 version: "3.7"
 services:
   web-php8-server:
-    container_name: clicars
+    container_name: web
     build:
       dockerfile: php.Dockerfile
       context: .

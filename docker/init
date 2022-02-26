@@ -1,7 +1,8 @@
-docker exec -it clicars-mysql-server-1 bash
+docker exec -it db bash
 mysql -uroot -psecret
-create database clicars
+create database db
 
-docker exec -it clicars-web-server-1 bash
+docker exec -it -u www-data web bash
+composer install
 php artisan migrate
 php artisan db:seed
