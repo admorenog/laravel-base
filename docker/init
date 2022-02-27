@@ -1,12 +1,12 @@
-docker exec -it -u www-data web sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
-docker cp ~/.ssh web:/var/www/
-docker cp ~/.gitconfig web:/var/www/
+docker exec -it -u app base_web sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+docker cp ~/.ssh base_web:/var/www/
+docker cp ~/.gitconfig base_web:/var/www/
 
-docker exec -it db bash
+docker exec -it base_db zsh
 mysql -uroot -psecret
 create database db
 
-docker exec -it -u www-data web bash
+docker exec -it -u app base_web zsh
 composer install
 php artisan migrate
 php artisan db:seed

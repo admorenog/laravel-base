@@ -4,20 +4,20 @@ RUN docker-php-ext-install mysqli pdo pdo_mysql
 #removing the annoying error bell in shell
 RUN echo "set bell-style visible" > ~/.inputrc
 
-RUN apt update
-RUN apt -y upgrade
-RUN apt -y install vim git zip zsh
+RUN apt update \
+	&& apt -y upgrade \
+	&& apt -y install vim git zip zsh
 
 # PHP config
-RUN pecl install xdebug
 COPY php/conf.d/* /usr/local/etc/php/conf.d/
+RUN pecl install xdebug
 RUN touch /var/log/php_error.log && chmod og+w /var/log/php_error.log
 
 # Apache configuration
 COPY apache/envvars /etc/apache2/envvars
-RUN a2enmod rewrite
-RUN echo "ServerName 127.0.0.1" >> /etc/apache2/apache2.conf
-RUN sed -i 's/\/var\/www\/html/\/var\/www\/html\/public/g' /etc/apache2/sites-enabled/000-default.conf
+RUN a2enmod rewrite \
+	&& echo "ServerName 127.0.0.1" >> /etc/apache2/apache2.conf \
+	&& sed -i 's/\/var\/www\/html/\/var\/www\/html\/public/g' /etc/apache2/sites-enabled/000-default.conf
 
 # Composer
 RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
@@ -27,7 +27,7 @@ RUN php -r "unlink('composer-setup.php');"
 RUN mv composer.phar /usr/local/bin/composer
 
 # Permissions
-RUN usermod -u 1000 www-data
-RUN groupmod -g 1000 www-data
-RUN chown -R www-data:www-data /var/www
+RUN groupadd -g 1000 app
+RUN useradd app -g app -u 1000 -m
+RUN chown -R app:app /var/www
 WORKDIR /var/www/html
