@@ -9,12 +9,10 @@ RUN apt update \
 	&& apt -y install vim git zip zsh
 
 # PHP config
-COPY php/conf.d/* /usr/local/etc/php/conf.d/
 RUN pecl install xdebug
 RUN touch /var/log/php_error.log && chmod og+w /var/log/php_error.log
 
 # Apache configuration
-COPY apache/envvars /etc/apache2/envvars
 RUN a2enmod rewrite \
 	&& echo "ServerName 127.0.0.1" >> /etc/apache2/apache2.conf \
 	&& sed -i 's/\/var\/www\/html/\/var\/www\/html\/public/g' /etc/apache2/sites-enabled/000-default.conf
