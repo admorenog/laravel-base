@@ -9,6 +9,8 @@ RUN apt update \
 	&& apt -y upgrade \
 	&& apt -y install vim git zip zsh
 
+ENV EDITOR=vim
+
 # PHP config
 RUN pecl install xdebug
 
